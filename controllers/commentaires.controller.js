@@ -15,20 +15,55 @@ const ErreurHttp = require('../utils/erreur-http');
 
 // GET /api/articles/:id/commentaires
 function lister(req, res, next) {
-    const article_id = Number(req.params.id)
+    const article_id = Number(req.params.id);
     service.lister(article_id)
         .then((liste) => res.json(liste))
         .catch(next);
 }
 
-// POST /api/articles
-/*
+// POST /api/articles/:id/commentaires
 function creer(req, res, next) {
-  const { titre, categorie, auteur, contenu } = req.body || {};
-  if (!titre) return next(new ErreurHttp(400, 'TITRE_MANQUANT', 'Le champ titre est obligatoire.'));
-  service.creer({ titre, categorie, auteur, contenu })
-    .then((article) => res.status(201).json(article))
+    const article_id = Number(req.params.id);
+    const { nom, texte } = req.body || {};
+    if (!nom || !texte) {return next(new ErreurHttp(400, 'CHAMP_MANQUANT', 'Les champs nom et texte sont obligatoires.'));}
+    service.creer(article_id, { nom, texte })
+        .then((commentaire) => res.status(201).json(commentaire))
+        .catch(next);
+}
+
+// GET /api/commentaires?nom=Claire
+function parVisiteur(req, res, next) {
+  const { nom } = req.query;
+  if (!nom) return next(new ErreurHttp(400, 'NOM_MANQUANT', 'Le paramètre nom est obligatoire.'));
+  service.parVisiteur(nom)
+    .then((liste) => res.json(liste))
     .catch(next);
 }
-*/
-module.exports = {lister};
+
+// GET /api/commentaires/:id
+function trouver(req, res, next) {
+  const id = Number(req.params.id);
+  service.trouver(id)
+    .then((commentaire) => res.json(commentaire))
+    .catch(next);
+}
+
+// PATCH /api/commentaires/:id
+function modifier(req, res, next) {
+  const id = Number(req.params.id);
+  const { texte } = req.body || {};
+  if (!texte) return next(new ErreurHttp(400, 'TEXTE_MANQUANT', 'Le champ texte est obligatoire.'));
+  service.modifier(id, { texte })
+    .then((commentaire) => res.json(commentaire))
+    .catch(next);
+}
+
+// DELETE /api/commentaires/:id
+function supprimer(req, res, next) {
+  const id = Number(req.params.id);
+  service.supprimer(id)
+    .then(() => res.status(204).end())
+    .catch(next);
+}
+
+module.exports = { lister, creer, parVisiteur, trouver, modifier, supprimer };
