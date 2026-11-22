@@ -10,4 +10,25 @@
 // const service = require('../services/commentaires.service');
 // const ErreurHttp = require('../utils/erreur-http');
 
-module.exports = {};
+const service = require('../services/commentaires.service');
+const ErreurHttp = require('../utils/erreur-http');
+
+// GET /api/articles/:id/commentaires
+function lister(req, res, next) {
+    const article_id = Number(req.params.id)
+    service.lister(article_id)
+        .then((liste) => res.json(liste))
+        .catch(next);
+}
+
+// POST /api/articles
+/*
+function creer(req, res, next) {
+  const { titre, categorie, auteur, contenu } = req.body || {};
+  if (!titre) return next(new ErreurHttp(400, 'TITRE_MANQUANT', 'Le champ titre est obligatoire.'));
+  service.creer({ titre, categorie, auteur, contenu })
+    .then((article) => res.status(201).json(article))
+    .catch(next);
+}
+*/
+module.exports = {lister};

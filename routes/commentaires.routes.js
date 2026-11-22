@@ -7,10 +7,17 @@
 
 const express = require('express');
 // const verifierJeton = require('../middlewares/jeton');
-// const controleur = require('../controllers/commentaires.controller');
+const controleur = require('../controllers/commentaires.controller');
 
 const router = express.Router();
 
 // les six routes ici
+
+router.get('/articles/:id/commentaires', controleur.lister);          // lire tout
+//router.post('/api/articles/:id/commentaires', controleur.creer);          // creer
+//router.get('/articles/:id/commentaires', controleur.trouver);      // lire un, avec ?champs=
+//router.patch('/:id', controleur.modifier);   // modifier en partie
+//router.delete('/:id', controleur.supprimer); // supprimer
+
 
 module.exports = router;
