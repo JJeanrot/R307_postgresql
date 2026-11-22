@@ -75,9 +75,8 @@ ORDER BY total_commentaires DESC;
 
 SELECT nom
 FROM commentaires
-JOIN articles ON articles.id = commentaires.article_id
 GROUP BY nom
-HAVING COUNT(*) > 1;
+HAVING COUNT(DISTINCT article_id) > 1;
 
 --  nom   
 ----------
