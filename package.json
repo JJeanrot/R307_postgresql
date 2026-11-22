@@ -4,8 +4,8 @@
   "description": "R307 seance 1 - exercice en groupe : les commentaires des Ateliers du Bois dans PostgreSQL",
   "groupe": {
     "membres": [
-      "Julien Py",
-      "Jules Jeanrot"
+      "Jules Jeanrot",
+      "Julien Py"
     ],
     "depot_github": "https://github.com/JJeanrot/R307_postgresql"
   },
