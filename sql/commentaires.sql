@@ -17,11 +17,13 @@ DROP TABLE IF EXISTS commentaires;
 
 CREATE TABLE commentaires (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  article_id INT NOT NULL REFERENCES articles (id),
+  article_id INT NOT NULL REFERENCES articles (id) ON DELETE CASCADE,
   nom TEXT NOT NULL,
   texte TEXT NOT NULL CHECK (texte <> ''),
-  cree_le DATE NOT NULL DEFAULT CURRENT_DATE
+  cree_le TIMESTAMPTZ NOT NULL DEFAULT CURRENT_DATE
 );
+
+
 
 
 -- QUESTION 2 · Inserer les huit commentaires de data/commentaires.initial.json.
